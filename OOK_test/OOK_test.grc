@@ -130,7 +130,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: /Users/kesenheimer/Documents/Basteln/SDR/OOK_test/OOK_test.bin
+    file: /Users/kesenheimer/Documents/Basteln/SDR/gnuRadio_modules/OOK_test/OOK_test.bin
     type: byte
     unbuffered: 'False'
     vlen: '1'

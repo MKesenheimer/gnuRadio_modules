@@ -105,7 +105,7 @@ class OOK_test(gr.top_block, Qt.QWidget):
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.blocks_repeat_0 = blocks.repeat(gr.sizeof_gr_complex*1, 600)
         self.blocks_multiply_xx_0 = blocks.multiply_vcc(1)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/Users/kesenheimer/Documents/Basteln/SDR/OOK_test/OOK_test.bin', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/Users/kesenheimer/Documents/Basteln/SDR/gnuRadio_modules/OOK_test/OOK_test.bin', False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.analog_sig_source_x_0 = analog.sig_source_c(samp_rate, analog.GR_COS_WAVE, freq_0, 1, 0, 0)
         self.OOKDemodulator_1 = OOKDemodulator(
