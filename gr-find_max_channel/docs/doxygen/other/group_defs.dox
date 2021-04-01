@@ -1,0 +1,7 @@
+/*!
+ * \defgroup block GNU Radio FIND_MAX_CHANNEL C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the FIND_MAX_CHANNEL GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */
+
