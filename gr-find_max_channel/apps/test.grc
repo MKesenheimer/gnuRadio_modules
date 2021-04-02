@@ -36,7 +36,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '32000'
+    value: '10'
   states:
     bus_sink: false
     bus_source: false
@@ -61,7 +61,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [55, 141]
+    coordinate: [20, 141]
     rotation: 0
     state: true
 - name: blocks_file_sink_0
@@ -96,7 +96,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [227, 161]
+    coordinate: [199, 161]
     rotation: 0
     state: true
 - name: blocks_stream_to_vector_decimator_0
@@ -115,7 +115,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [379, 149]
+    coordinate: [506, 96]
     rotation: 0
     state: true
 - name: blocks_throttle_0
@@ -134,7 +134,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [385, 299]
+    coordinate: [331, 161]
     rotation: 0
     state: true
 - name: find_max_channel_0
@@ -145,12 +145,13 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
+    threshold: '5'
     vector_length: '10'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [624, 159]
+    coordinate: [701, 104]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -207,7 +208,7 @@ blocks:
     marker8: '-1'
     marker9: '-1'
     name: '""'
-    nconnections: '2'
+    nconnections: '1'
     size: '30'
     srate: samp_rate / 10
     stemplot: 'False'
@@ -247,7 +248,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1005, 111]
+    coordinate: [999, 102]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_1
@@ -304,7 +305,7 @@ blocks:
     marker8: '-1'
     marker9: '-1'
     name: '""'
-    nconnections: '3'
+    nconnections: '2'
     size: '300'
     srate: samp_rate
     stemplot: 'False'
@@ -344,47 +345,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1040, 406]
-    rotation: 0
-    state: true
-- name: rational_resampler_xxx_0
-  id: rational_resampler_xxx
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    decim: '10'
-    fbw: '0'
-    interp: '1'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    taps: ''
-    type: fff
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [610, 266]
-    rotation: 0
-    state: true
-- name: rational_resampler_xxx_1
-  id: rational_resampler_xxx
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    decim: '1'
-    fbw: '0'
-    interp: '10'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    taps: ''
-    type: fff
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [827, 314]
+    coordinate: [1028, 257]
     rotation: 0
     state: true
 - name: rational_resampler_xxx_2
@@ -404,23 +365,19 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [822, 210]
+    coordinate: [836, 175]
     rotation: 0
     state: true
 
 connections:
 - [analog_random_source_x_0, '0', blocks_int_to_float_0, '0']
-- [blocks_int_to_float_0, '0', blocks_stream_to_vector_decimator_0, '0']
 - [blocks_int_to_float_0, '0', blocks_throttle_0, '0']
 - [blocks_stream_to_vector_decimator_0, '0', find_max_channel_0, '0']
-- [blocks_throttle_0, '0', qtgui_time_sink_x_1, '2']
-- [blocks_throttle_0, '0', rational_resampler_xxx_0, '0']
+- [blocks_throttle_0, '0', blocks_stream_to_vector_decimator_0, '0']
+- [blocks_throttle_0, '0', qtgui_time_sink_x_1, '1']
 - [find_max_channel_0, '0', blocks_file_sink_0, '0']
 - [find_max_channel_0, '0', qtgui_time_sink_x_0, '0']
 - [find_max_channel_0, '0', rational_resampler_xxx_2, '0']
-- [rational_resampler_xxx_0, '0', qtgui_time_sink_x_0, '1']
-- [rational_resampler_xxx_0, '0', rational_resampler_xxx_1, '0']
-- [rational_resampler_xxx_1, '0', qtgui_time_sink_x_1, '1']
 - [rational_resampler_xxx_2, '0', qtgui_time_sink_x_1, '0']
 
 metadata:

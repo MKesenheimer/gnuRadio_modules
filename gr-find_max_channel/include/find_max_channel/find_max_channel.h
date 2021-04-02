@@ -45,7 +45,7 @@ namespace gr {
        * class. find_max_channel::find_max_channel::make is the public interface for
        * creating new instances.
        */
-      static sptr make(size_t vec_length = 1024);
+      static sptr make(size_t vec_length = 1024, float threshold = -999);
     };
 
   } // namespace find_max_channel

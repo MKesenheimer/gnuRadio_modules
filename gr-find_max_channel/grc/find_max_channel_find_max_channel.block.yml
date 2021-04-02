@@ -1,29 +1,18 @@
 id: find_max_channel
 label: Find max channel
+flags: [python, cpp]
 category: '[Channel manipulation]'
 
-templates:
-  imports: import find_max_channel
-  make: find_max_channel.find_max_channel(${vector_length})
-
-#  Make one 'parameters' list entry for every parameter you want settable from the GUI.
-#     Keys include:
-#     * id (makes the value accessible as \$keyname, e.g. in the make entry)
-#     * label (label shown in the GUI)
-#     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
 parameters:
 - id: vector_length
   label: Vec length
   dtype: int
   default: '1024'
+- id: threshold
+  label: Threshold
+  dtype: float
+  default: '-999'
 
-#  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
-#  Keys include:
-#      * label (an identifier for the GUI)
-#      * domain (optional - stream or message. Default is stream)
-#      * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
-#      * vlen (optional - data stream vector length. Default is 1)
-#      * optional (optional - set to 1 for optional inputs. Default is 0)
 inputs:
 - label: in
   domain: stream
@@ -35,6 +24,16 @@ outputs:
   domain: stream
   dtype: float
 
-#  'file_format' specifies the version of the GRC yml format used in the file
-#  and should usually not be changed.
+asserts:
+- ${ vector_length > 0 }
+
+templates:
+  imports: import find_max_channel
+  make: find_max_channel.find_max_channel(${vector_length}, ${threshold})
+
+#cpp_templates:
+#    includes: ['#include <gnuradio/blocks/min_blk.h>']
+#    declarations: 'blocks::min_${type.fcn}::sptr ${id};'
+#    make: 'this->${id} = blocks::min_${type.fcn}::make(${vlen},${vlen_out});'
+
 file_format: 1

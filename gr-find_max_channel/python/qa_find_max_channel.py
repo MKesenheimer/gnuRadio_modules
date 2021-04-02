@@ -32,10 +32,10 @@ class qa_find_max_channel(gr_unittest.TestCase):
         self.tb = None
 
     def test_001_t(self):
-        src_data = (-3, 4, -5.5, 2, 3)
-        expected_result = (1,)
-        src = blocks.vector_source_f(src_data, False, 5, []) # 5
-        mx = find_max_channel.find_max_channel(5)
+        src_data = (-3, 4, -5.5, 2, 3, 0, -1, -2, -4, -5, 0, 1, 2, 3, 4)
+        expected_result = (1, 1, 4)
+        src = blocks.vector_source_f(src_data, False, 5, [])
+        mx = find_max_channel.find_max_channel(5, 3)
         dst = blocks.vector_sink_f()
         self.tb.connect(src, mx)
         self.tb.connect(mx, dst)
@@ -47,8 +47,8 @@ class qa_find_max_channel(gr_unittest.TestCase):
     def test_002_t(self):
         src_data = (-3, 4, -5.5, 2, 3, 123, 3, 1, 20, 1, 4, -7, 5600, 8, 5)
         expected_result = (12,)
-        src = blocks.vector_source_f(src_data, False, 15, []) # 15
-        mx = find_max_channel.find_max_channel(15)
+        src = blocks.vector_source_f(src_data, False, 15, [])
+        mx = find_max_channel.find_max_channel(15, 0)
         dst = blocks.vector_sink_f()
         self.tb.connect(src, mx)
         self.tb.connect(mx, dst)
