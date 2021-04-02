@@ -34,6 +34,7 @@ namespace gr {
         (new find_max_channel_impl(vec_length, threshold));
     }
 
+
     /*
      * The private constructor
      */
@@ -86,18 +87,16 @@ namespace gr {
         out++;
 
 #ifdef DEBUG
-      if ((m_counter++) % 100 == 0) {
-        GR_LOG_INFO(d_logger, boost::format("noutput_items=%d") % noutput_items);
-        GR_LOG_INFO(d_logger, boost::format("channel=%d, max=%d, m_last_max_channel=%d") 
-          % out[0] % max % m_last_max_channel);
-      }
+        if ((m_counter++) % 100 == 0) {
+          GR_LOG_INFO(d_logger, boost::format("noutput_items=%d") % noutput_items);
+          GR_LOG_INFO(d_logger, boost::format("channel=%d, max=%d, m_last_max_channel=%d") 
+            % out[0] % max % m_last_max_channel);
+        }
 #endif
       }
 
-      // Tell runtime system how many output items we produced.
       return noutput_items;
     }
-
   } /* namespace find_max_channel */
 } /* namespace gr */
 
