@@ -178,7 +178,7 @@ class test(gr.top_block, Qt.QWidget):
 
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win)
-        self.find_max_channel_0 = find_max_channel.find_max_channel(10, 5)
+        self.find_max_channel_0 = find_max_channel.find_max_channel(10, 8)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
         self.blocks_stream_to_vector_decimator_0 = blocks.stream_to_vector_decimator(
             item_size=gr.sizeof_float,

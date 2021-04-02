@@ -145,13 +145,13 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    threshold: '5'
+    threshold: '8'
     vector_length: '10'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [701, 104]
+    coordinate: [716, 101]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -375,7 +375,6 @@ connections:
 - [blocks_stream_to_vector_decimator_0, '0', find_max_channel_0, '0']
 - [blocks_throttle_0, '0', blocks_stream_to_vector_decimator_0, '0']
 - [blocks_throttle_0, '0', qtgui_time_sink_x_1, '1']
-- [find_max_channel_0, '0', blocks_file_sink_0, '0']
 - [find_max_channel_0, '0', qtgui_time_sink_x_0, '0']
 - [find_max_channel_0, '0', rational_resampler_xxx_2, '0']
 - [rational_resampler_xxx_2, '0', qtgui_time_sink_x_1, '0']

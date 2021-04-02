@@ -40,10 +40,6 @@ namespace gr {
       /*!
        * \brief Return a shared_ptr to a new instance of find_max_channel::find_max_channel.
        *
-       * To avoid accidental use of raw pointers, find_max_channel::find_max_channel's
-       * constructor is in a private implementation
-       * class. find_max_channel::find_max_channel::make is the public interface for
-       * creating new instances.
        */
       static sptr make(size_t vec_length = 1024, float threshold = -999);
     };

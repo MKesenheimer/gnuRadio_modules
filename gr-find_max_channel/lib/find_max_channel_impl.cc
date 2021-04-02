@@ -28,12 +28,17 @@
 namespace gr {
   namespace find_max_channel {
 
+    // construct last_max_channel on first use idiom
+    /*static float& get_last_max_channel() {
+      static float last_max_channel = 0;
+      return last_max_channel;
+    }*/
+
     find_max_channel::sptr
     find_max_channel::make(size_t vec_length, float threshold) {
       return gnuradio::get_initial_sptr
         (new find_max_channel_impl(vec_length, threshold));
     }
-
 
     /*
      * The private constructor
@@ -44,11 +49,7 @@ namespace gr {
               gr::io_signature::make(1, 1, sizeof(float)), 1),
         m_vec_length(vec_length),
         m_threshold(threshold),
-        m_last_max_channel(0)
-#ifdef DEBUG
-        , m_counter(0)
-#endif
-    {
+        m_last_max_channel(0) {
       //this->set_relative_rate(1, (uint64_t)vec_length);
       this->set_relative_rate(1, 1);
     }
@@ -68,30 +69,40 @@ namespace gr {
       size_t size = noutput_items;
 
       while (size-- > 0) {
+
+#ifdef DEBUG
+        GR_LOG_INFO(d_logger, boost::format("threshold=%d") % m_threshold);
+        GR_LOG_INFO(d_logger, boost::format("input_items[%d]") % size);
+        for (int i = 0; i < m_vec_length; ++i)
+          GR_LOG_INFO(d_logger, boost::format("%d, ") % in[i]);
+#endif
+
         *out = 0;
-        float max = *in;
+        float max = *in++;
         for (int j = 1; j < m_vec_length; ++j) {
-          in++;
           if (*in > max) {
             *out = j;
             max = *in;
           }
+          in++;
         }
 
-        if (m_threshold != -999 && max >= m_threshold) {
-          m_last_max_channel = *out;
-        } else {
-          *out = m_last_max_channel;
+        if (m_threshold != -999) {
+          if (max >= m_threshold) {
+            //get_last_max_channel() = *out;
+            m_last_max_channel = *out;
+          } else {
+            //*out = get_last_max_channel();
+            *out = m_last_max_channel;
+          }
         }
 
         out++;
 
 #ifdef DEBUG
-        if ((m_counter++) % 100 == 0) {
-          GR_LOG_INFO(d_logger, boost::format("noutput_items=%d") % noutput_items);
-          GR_LOG_INFO(d_logger, boost::format("channel=%d, max=%d, m_last_max_channel=%d") 
-            % out[0] % max % m_last_max_channel);
-        }
+        GR_LOG_INFO(d_logger, boost::format("noutput_items=%d") % noutput_items);
+        GR_LOG_INFO(d_logger, boost::format("channel=%d, max=%d, last_max_channel=%d") 
+          % out[0] % max % m_last_max_channel());
 #endif
       }
 

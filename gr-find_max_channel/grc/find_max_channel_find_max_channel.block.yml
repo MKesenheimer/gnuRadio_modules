@@ -29,7 +29,7 @@ asserts:
 
 templates:
   imports: import find_max_channel
-  make: find_max_channel.find_max_channel(${vec_length}, ${threshold})
+  make: find_max_channel.find_max_channel(${vector_length}, ${threshold})
 
 #cpp_templates:
 #    includes: ['#include <gnuradio/blocks/min_blk.h>']

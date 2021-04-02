@@ -31,7 +31,38 @@ class qa_find_max_channel(gr_unittest.TestCase):
     def tearDown(self):
         self.tb = None
 
+    # which is the channel with the maximum value?
+    # three values, no threshold
     def test_001_t(self):
+        src_data = (0, 1, 2)
+        expected_result = (2,) # max value is in the second channel 
+        src = blocks.vector_source_f(src_data, False, 3, [])
+        mx = find_max_channel.find_max_channel(3) # using no threshold (default)
+        dst = blocks.vector_sink_f()
+        self.tb.connect(src, mx)
+        self.tb.connect(mx, dst)
+        self.tb.run()
+        result_data = dst.data()
+        self.assertEqual(expected_result, result_data)
+
+    # 15 values, no threshold
+    def test_002_t(self):
+        src_data = (-3, 4, -5.5, 2, 3, 123, 3, 1, 20, 1, 4, -7, 5600, 8, 5)
+        expected_result = (12,)
+        src = blocks.vector_source_f(src_data, False, 15, [])
+        mx = find_max_channel.find_max_channel(15)
+        dst = blocks.vector_sink_f()
+        self.tb.connect(src, mx)
+        self.tb.connect(mx, dst)
+        self.tb.run()
+        result_data = dst.data()
+        self.assertEqual(expected_result, result_data)
+
+    # three times five values, threshold of three
+    # 1.) (-3, 4, -5.5, 2, 3) -> gives channel 1
+    # 2.) (0, -1, -2, -4, -5) -> would give channel 0, but threshold is three -> take the last value -> 1
+    # 3.) (0, 1, 2, 3, 4) -> gives channel 4
+    def test_003_t(self):
         src_data = (-3, 4, -5.5, 2, 3, 0, -1, -2, -4, -5, 0, 1, 2, 3, 4)
         expected_result = (1, 1, 4)
         src = blocks.vector_source_f(src_data, False, 5, [])
@@ -39,20 +70,6 @@ class qa_find_max_channel(gr_unittest.TestCase):
         dst = blocks.vector_sink_f()
         self.tb.connect(src, mx)
         self.tb.connect(mx, dst)
-        #self.tb.connect(src, mx, dst)
-        self.tb.run()
-        result_data = dst.data()
-        self.assertEqual(expected_result, result_data)
-
-    def test_002_t(self):
-        src_data = (-3, 4, -5.5, 2, 3, 123, 3, 1, 20, 1, 4, -7, 5600, 8, 5)
-        expected_result = (12,)
-        src = blocks.vector_source_f(src_data, False, 15, [])
-        mx = find_max_channel.find_max_channel(15, 0)
-        dst = blocks.vector_sink_f()
-        self.tb.connect(src, mx)
-        self.tb.connect(mx, dst)
-        #self.tb.connect(src, mx, dst)
         self.tb.run()
         result_data = dst.data()
         self.assertEqual(expected_result, result_data)

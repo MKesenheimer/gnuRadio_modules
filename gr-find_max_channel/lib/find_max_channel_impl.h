@@ -33,9 +33,6 @@ namespace gr {
       const size_t m_vec_length;
       const float m_threshold;
       float m_last_max_channel;
-#ifdef DEBUG
-      size_t m_counter;
-#endif
 
      public:
       find_max_channel_impl(size_t vec_length, float threshold);
