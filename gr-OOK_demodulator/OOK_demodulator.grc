@@ -27,7 +27,7 @@ options:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 8]
+    coordinate: [8, 8.0]
     rotation: 0
     state: enabled
 
@@ -48,7 +48,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [561, 222]
+    coordinate: [416, 160.0]
     rotation: 0
     state: true
 - name: analog_sig_source_x_0
@@ -70,7 +70,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [146, 319]
+    coordinate: [48, 180.0]
     rotation: 0
     state: true
 - name: blocks_add_const_vxx_0
@@ -88,7 +88,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [994, 250]
+    coordinate: [808, 180.0]
     rotation: 0
     state: true
 - name: blocks_float_to_char_0
@@ -105,8 +105,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [464, 503]
-    rotation: 0
+    coordinate: [808, 268.0]
+    rotation: 180
     state: true
 - name: blocks_multiply_const_vxx_0
   id: blocks_multiply_const_vxx
@@ -123,7 +123,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [514, 367]
+    coordinate: [952, 180.0]
     rotation: 0
     state: true
 - name: blocks_multiply_xx_0
@@ -141,7 +141,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [407, 227]
+    coordinate: [288, 164.0]
     rotation: 0
     state: true
 - name: blocks_repack_bits_bb_0
@@ -161,7 +161,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [630, 492]
+    coordinate: [808, 344.0]
     rotation: 0
     state: true
 - name: blocks_threshold_ff_0
@@ -179,8 +179,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 490]
-    rotation: 0
+    coordinate: [960, 256.0]
+    rotation: 180
     state: true
 - name: digital_clock_recovery_mm_xx_0
   id: digital_clock_recovery_mm_xx
@@ -200,7 +200,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [763, 219]
+    coordinate: [600, 156.0]
     rotation: 0
     state: true
 - name: freq_0
@@ -217,7 +217,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [265, 6]
+    coordinate: [264, 8.0]
     rotation: 0
     state: true
 - name: gain
@@ -234,7 +234,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [574, 11]
+    coordinate: [552, 8.0]
     rotation: 0
     state: true
 - name: low_pass_cutoff
@@ -251,7 +251,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [343, 9]
+    coordinate: [336, 8.0]
     rotation: 0
     state: true
 - name: offset
@@ -268,7 +268,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [650, 13]
+    coordinate: [624, 8.0]
     rotation: 0
     state: true
 - name: pad_sink_0
@@ -286,7 +286,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [848, 495]
+    coordinate: [1136, 348.0]
     rotation: 0
     state: true
 - name: pad_sink_1
@@ -304,7 +304,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [808, 343]
+    coordinate: [1128, 180.0]
     rotation: 0
     state: true
 - name: pad_source_0
@@ -324,7 +324,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [87, 199]
+    coordinate: [112, 132.0]
     rotation: 0
     state: true
 - name: samp_per_sym
@@ -341,7 +341,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [463, 11]
+    coordinate: [448, 8.0]
     rotation: 0
     state: true
 - name: samp_rate
@@ -358,7 +358,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [173, 7]
+    coordinate: [176, 8.0]
     rotation: 0
     state: true
 
