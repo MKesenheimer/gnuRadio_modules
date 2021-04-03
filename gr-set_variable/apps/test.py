@@ -26,6 +26,7 @@ from gnuradio import qtgui
 from gnuradio.filter import firdes
 import sip
 from gnuradio import analog
+from gnuradio import audio
 from gnuradio import blocks
 from gnuradio import gr
 import sys
@@ -73,7 +74,7 @@ class test(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 32000
+        self.samp_rate = samp_rate = 32e3
         self.freq_variable = freq_variable = 0
 
         ##################################################
@@ -127,8 +128,52 @@ class test(gr.top_block, Qt.QWidget):
 
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win)
-        self.blocks_vector_source_x_0 = blocks.vector_source_f((500,), False, 1, [])
+        self.qtgui_freq_sink_x_0 = qtgui.freq_sink_f(
+            1024, #size
+            firdes.WIN_BLACKMAN_hARRIS, #wintype
+            0, #fc
+            samp_rate, #bw
+            "", #name
+            1
+        )
+        self.qtgui_freq_sink_x_0.set_update_time(0.10)
+        self.qtgui_freq_sink_x_0.set_y_axis(-140, 10)
+        self.qtgui_freq_sink_x_0.set_y_label('Relative Gain', 'dB')
+        self.qtgui_freq_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
+        self.qtgui_freq_sink_x_0.enable_autoscale(False)
+        self.qtgui_freq_sink_x_0.enable_grid(False)
+        self.qtgui_freq_sink_x_0.set_fft_average(1.0)
+        self.qtgui_freq_sink_x_0.enable_axis_labels(True)
+        self.qtgui_freq_sink_x_0.enable_control_panel(False)
+
+
+        self.qtgui_freq_sink_x_0.set_plot_pos_half(not True)
+
+        labels = ['', '', '', '', '',
+            '', '', '', '', '']
+        widths = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        colors = ["blue", "red", "green", "black", "cyan",
+            "magenta", "yellow", "dark red", "dark green", "dark blue"]
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0]
+
+        for i in range(1):
+            if len(labels[i]) == 0:
+                self.qtgui_freq_sink_x_0.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_freq_sink_x_0.set_line_label(i, labels[i])
+            self.qtgui_freq_sink_x_0.set_line_width(i, widths[i])
+            self.qtgui_freq_sink_x_0.set_line_color(i, colors[i])
+            self.qtgui_freq_sink_x_0.set_line_alpha(i, alphas[i])
+
+        self._qtgui_freq_sink_x_0_win = sip.wrapinstance(self.qtgui_freq_sink_x_0.pyqwidget(), Qt.QWidget)
+        self.top_grid_layout.addWidget(self._qtgui_freq_sink_x_0_win)
         self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
+        self.blocks_add_xx_0 = blocks.add_vff(1)
+        self.audio_sink_0 = audio.sink(32000, '', True)
+        self.analog_sig_source_x_2 = analog.sig_source_f(samp_rate, analog.GR_COS_WAVE, 12.34, 5, 0, 0)
+        self.analog_sig_source_x_1 = analog.sig_source_f(samp_rate, analog.GR_CONST_WAVE, 5000, 500, 0, 0)
         self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_COS_WAVE, freq_variable, 1, 0, 0)
 
 
@@ -137,8 +182,12 @@ class test(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.connect((self.analog_sig_source_x_0, 0), (self.blocks_throttle_0, 0))
+        self.connect((self.analog_sig_source_x_1, 0), (self.blocks_add_xx_0, 0))
+        self.connect((self.analog_sig_source_x_2, 0), (self.blocks_add_xx_0, 1))
+        self.connect((self.blocks_add_xx_0, 0), (self.set_variable_0, 0))
+        self.connect((self.blocks_throttle_0, 0), (self.audio_sink_0, 0))
+        self.connect((self.blocks_throttle_0, 0), (self.qtgui_freq_sink_x_0, 0))
         self.connect((self.blocks_throttle_0, 0), (self.qtgui_time_sink_x_0, 0))
-        self.connect((self.blocks_vector_source_x_0, 0), (self.set_variable_0, 0))
 
 
     def closeEvent(self, event):
@@ -152,7 +201,10 @@ class test(gr.top_block, Qt.QWidget):
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
         self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
+        self.analog_sig_source_x_1.set_sampling_freq(self.samp_rate)
+        self.analog_sig_source_x_2.set_sampling_freq(self.samp_rate)
         self.blocks_throttle_0.set_sample_rate(self.samp_rate)
+        self.qtgui_freq_sink_x_0.set_frequency_range(0, self.samp_rate)
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
 
     def get_freq_variable(self):
