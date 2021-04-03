@@ -1,0 +1,27 @@
+id: set_variable
+label: Set variable
+category: '[Runtime modifying]'
+
+parameters:
+- id: target
+  label: Variable
+  dtype: string
+  default: 'freq'
+
+inputs:
+- id: inpair
+  domain: message
+  optional: true
+- label: in
+  domain: stream
+  dtype: float
+  optional: true
+
+templates:
+  imports: from set_variable import set_variable
+  make: set_variable(${ 'self.set_' + context.get('target')() })
+
+documentation: |-
+    This block will take an input message pair or a value from a stream and allow you to set a gnuradio variable.
+
+file_format: 1  
