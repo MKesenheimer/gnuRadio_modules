@@ -1,6 +1,6 @@
 # gr-set_variable
 
-This is a block which takes a number as input and sets a previously defined variable.
+This block takes a number as input and sets a previously defined variable.
 This can be used if a variable needs runtime adjustment, for example a variable of
 a low-pass filter etc.
 
