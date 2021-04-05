@@ -9,13 +9,14 @@ parameters:
   default: 'freq'
 
 inputs:
-- id: inpair
-  domain: message
-  optional: true
 - label: in
   domain: stream
   dtype: float
-  optional: true
+
+outputs:
+- label: update
+  domain: stream
+  dtype: float
 
 templates:
   imports: from set_variable import set_variable

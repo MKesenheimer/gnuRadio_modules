@@ -32,30 +32,28 @@ class set_variable(gr.sync_block):
         gr.sync_block.__init__(self,
             name="set_variable",
             in_sig=[numpy.float32],
-            out_sig=None)
+            out_sig=[numpy.float32])
         
         self.callback = callback
-
-        self.message_port_register_in(pmt.intern("inpair"))
-        self.set_msg_handler(pmt.intern("inpair"), self.msg_handler)
-
+        self.new_val = 0
 
     def work(self, input_items, output_items):
         in0 = input_items[0]
-        try: 
-            new_val = in0[0]
-            self.callback(new_val)
-        except Exception as e:
-            gr.log.error("Error with message conversion: %s" % str(e))
-        return 0
-        #return len(output_items[0])
-
-    def msg_handler(self, msg):
         try:
-            new_val = pmt.to_python(pmt.cdr(msg))
-            self.callback(new_val)
+            #gr.log.info("---- input items ----")
+            #gr.log.info("number of inputs = {}".format(len(input_items)))
+            for i in range(len(in0)):
+                #gr.log.info("{}".format(in0[i]))
+                if in0[i] != self.new_val: #in0[i] > 0 and
+                    output_items[0][i] = 1
+                    self.new_val = in0[i]
+                    #gr.log.info("new value ({}) = {}".format(i, self.new_val))
+                    self.callback(self.new_val)
+            #gr.log.info("---- end work ----")
         except Exception as e:
-            gr.log.error("Error with message conversion: %s" % str(e))
+            gr.log.error("Error with input conversion: {}".format(e))
+
+        return len(output_items[0])
 
     def stop(self):
         return True
