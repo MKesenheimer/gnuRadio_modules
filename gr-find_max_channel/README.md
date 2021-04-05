@@ -1,4 +1,4 @@
-* gr-find_max_channel
+# gr-find_max_channel
 
 This block can be used to find the index of the value in a vector with the maximum value.
 For example, if the vector
