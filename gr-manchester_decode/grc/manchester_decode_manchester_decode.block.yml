@@ -1,45 +1,39 @@
-id: manchester_decode_manchester_decode
-label: manchester_decode
-category: '[manchester_decode]'
+id: manchester_decode
+label: Manchester decode
+flags: [python, cpp]
+category: '[Symbol Coding]'
 
 templates:
   imports: import manchester_decode
-  make: manchester_decode.manchester_decode(${channel}, ${messageLength}, ${sampleRate})
+  make: manchester_decode.manchester_decode(${samples_per_symbol}, ${message_length})
 
-#  Make one 'parameters' list entry for every parameter you want settable from the GUI.
-#     Keys include:
-#     * id (makes the value accessible as \$keyname, e.g. in the make entry)
-#     * label (label shown in the GUI)
-#     * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
 parameters:
-- id: ...
-  label: ...
-  dtype: ...
-- id: ...
-  label: ...
-  dtype: ...
+- id: samples_per_symbol
+  label: samples per symbol
+  dtype: int
+  default: '4'
+- id: message_length
+  label: message length
+  dtype: int
+  default: '38'
 
-#  Make one 'inputs' list entry per input and one 'outputs' list entry per output.
-#  Keys include:
-#      * label (an identifier for the GUI)
-#      * domain (optional - stream or message. Default is stream)
-#      * dtype (e.g. int, float, complex, byte, short, xxx_vector, ...)
-#      * vlen (optional - data stream vector length. Default is 1)
-#      * optional (optional - set to 1 for optional inputs. Default is 0)
 inputs:
-- label: ...
-  domain: ...
-  dtype: ...
-  vlen: ...
-  optional: ...
+- label: in
+  domain: stream
+  dtype: float
 
 outputs:
-- label: ...
-  domain: ...
-  dtype: ...
-  vlen: ...
-  optional: ...
+- label: out
+  domain: stream
+  dtype: byte
 
-#  'file_format' specifies the version of the GRC yml format used in the file
-#  and should usually not be changed.
+asserts:
+- ${ samples_per_symbol > 0 }
+- ${ message_length > 0 }
+
+#cpp_templates:
+#    includes: ['#include <gnuradio/blocks/min_blk.h>']
+#    declarations: 'blocks::min_${type.fcn}::sptr ${id};'
+#    make: 'this->${id} = blocks::min_${type.fcn}::make(${vlen},${vlen_out});'
+
 file_format: 1

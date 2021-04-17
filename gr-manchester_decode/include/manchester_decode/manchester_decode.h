@@ -22,7 +22,7 @@
 #define INCLUDED_MANCHESTER_DECODE_MANCHESTER_DECODE_H
 
 #include <manchester_decode/api.h>
-#include <gnuradio/sync_decimator.h>
+#include <gnuradio/block.h>
 
 namespace gr {
   namespace manchester_decode {
@@ -30,9 +30,8 @@ namespace gr {
     /*!
      * \brief <+description of block+>
      * \ingroup manchester_decode
-     *
      */
-    class MANCHESTER_DECODE_API manchester_decode : virtual public gr::sync_decimator
+    class MANCHESTER_DECODE_API manchester_decode : virtual public gr::block
     {
      public:
       typedef boost::shared_ptr<manchester_decode> sptr;
@@ -45,7 +44,7 @@ namespace gr {
        * class. manchester_decode::manchester_decode::make is the public interface for
        * creating new instances.
        */
-      static sptr make(size_t channel, size_t messageLength, float sampleRate);
+      static sptr make(size_t samples_per_symbol, size_t message_length, int bit_mode = 0, int endianess = 0);
     };
 
   } // namespace manchester_decode
