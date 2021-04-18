@@ -44,7 +44,7 @@ namespace gr {
        * class. manchester_decode::manchester_decode::make is the public interface for
        * creating new instances.
        */
-      static sptr make(size_t samples_per_symbol, size_t message_length, int bit_mode = 0, int endianess = 0);
+      static sptr make(size_t samples_per_symbol, size_t message_length, int bit_mode = 0, int endianess = 0, int n_sync_symbols = -1);
     };
 
   } // namespace manchester_decode

@@ -33,9 +33,10 @@ namespace gr {
     class manchester_decode_impl : public manchester_decode
     {
      private:
-      const size_t m_samples_per_symbol;
+      size_t m_samples_per_symbol;
       const int m_bits_or_bytes;
       const int m_endianess;
+      const int m_nsync_symbols;
 
 #ifdef V2
       int m_tick;
@@ -53,7 +54,8 @@ namespace gr {
 #endif
 
      public:
-      manchester_decode_impl(size_t samples_per_symbol, size_t message_length, int bit_mode, int endianess);
+      manchester_decode_impl(size_t samples_per_symbol, size_t message_length, 
+        int bit_mode, int endianess, int nsync_symbols);
       ~manchester_decode_impl();
 
       // Where all the action really happens

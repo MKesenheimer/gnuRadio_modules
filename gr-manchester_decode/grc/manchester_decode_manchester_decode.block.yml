@@ -28,7 +28,7 @@ outputs:
   dtype: byte
 
 asserts:
-- ${ samples_per_symbol > 0 }
+- ${ samples_per_symbol > 1 }
 - ${ message_length > 0 }
 
 #cpp_templates:
