@@ -25,7 +25,6 @@
 
 //#define DEBUG
 #define V1
-//#define V2
 
 namespace gr {
   namespace manchester_decode {
@@ -33,29 +32,13 @@ namespace gr {
     class manchester_decode_impl : public manchester_decode
     {
      private:
-      size_t m_samples_per_symbol;
+      size_t m_samples_per_symbol; // Todo: make static
+      const int m_nsync_symbols;
       const int m_bits_or_bytes;
       const int m_endianess;
-      const int m_nsync_symbols;
-
-#ifdef V2
-      int m_tick;
-      int m_mode;
-      int m_last;
-      int m_lasttrans;
-      int m_syncstart;
-      int m_synccount;
-      int m_nextbit;
-      int m_period;
-      uint8_t* m_bytes;
-      size_t m_message_length;
-      int m_nextsmp;
-      int m_msgoffset;
-#endif
 
      public:
-      manchester_decode_impl(size_t samples_per_symbol, size_t message_length, 
-        int bit_mode, int endianess, int nsync_symbols);
+      manchester_decode_impl(size_t samples_per_symbol, int nsync_symbols, int bit_mode, int endianess);
       ~manchester_decode_impl();
 
       // Where all the action really happens

@@ -5,17 +5,25 @@ category: '[Symbol Coding]'
 
 templates:
   imports: import manchester_decode
-  make: manchester_decode.manchester_decode(${samples_per_symbol}, ${message_length})
+  make: manchester_decode.manchester_decode(${samples_per_symbol}, ${nsync_symbols}, ${bit_mode}, ${endianess})
 
 parameters:
 - id: samples_per_symbol
   label: samples per symbol
   dtype: int
   default: '4'
-- id: message_length
-  label: message length
+- id: nsync_symbols
+  label: number of syncing symbols
   dtype: int
-  default: '38'
+  default: '0'
+- id: bit_mode
+  label: bit mode
+  dtype: int
+  default: '0'
+- id: endianess
+  label: endianess
+  dtype: int
+  default: '0'
 
 inputs:
 - label: in
@@ -29,7 +37,9 @@ outputs:
 
 asserts:
 - ${ samples_per_symbol > 1 }
-- ${ message_length > 0 }
+- ${ nsync_symbols >= 0 }
+- ${ bit_mode == 0 || bit_mode == 1}
+- ${ endianess == 0 || endianess == 1}
 
 #cpp_templates:
 #    includes: ['#include <gnuradio/blocks/min_blk.h>']
