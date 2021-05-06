@@ -38,8 +38,8 @@ outputs:
 asserts:
 - ${ samples_per_symbol > 1 }
 - ${ nsync_symbols >= 0 }
-- ${ bit_mode == 0 || bit_mode == 1}
-- ${ endianess == 0 || endianess == 1}
+- ${ bit_mode == 0 or bit_mode == 1}
+- ${ endianess == 0 or endianess == 1}
 
 #cpp_templates:
 #    includes: ['#include <gnuradio/blocks/min_blk.h>']
