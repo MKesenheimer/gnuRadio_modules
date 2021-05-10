@@ -7,3 +7,11 @@ A collection of various gnuRadio modules.
 * [Set variable](https://github.com/MKesenheimer/gnuRadio_modules/tree/master/gr-set_variable): A python block that allows setting a variable at runtime.
 * [Manchester decode](https://github.com/MKesenheimer/gnuRadio_modules/tree/master/gr-manchester_decode): Decode a Manchester-encoded bit stream.
 * [Manchester encode](https://github.com/MKesenheimer/gnuRadio_modules/tree/master/gr-manchester_encode): Encode a bit stream into a Manchester-encoded bit stream
+
+## Generating modules
+´´´
+gr_modtool newmod <name of module>
+cd <module>
+gr_modtool add -t general -l cpp
+´´´
+

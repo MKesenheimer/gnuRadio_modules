@@ -1,0 +1,7 @@
+/*!
+ * \defgroup block GNU Radio EXTRACT_PAYLOAD C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the EXTRACT_PAYLOAD GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */
+

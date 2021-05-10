@@ -65,6 +65,9 @@ namespace gr {
      */
     manchester_decode_impl::~manchester_decode_impl() {}
 
+    /*
+     * Forecasting the number of outputs
+     */
     void manchester_decode_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
 #ifdef DEBUG
       GR_LOG_INFO(d_logger, boost::format("noutput_items = %d") % noutput_items);
@@ -72,6 +75,9 @@ namespace gr {
       ninput_items_required[0] = (int)(noutput_items / m_samples_per_symbol);
     }
 
+    /*
+     * General work
+     */
     int manchester_decode_impl::general_work(int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,

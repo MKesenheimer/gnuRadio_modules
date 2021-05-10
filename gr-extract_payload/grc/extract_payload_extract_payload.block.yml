@@ -1,0 +1,42 @@
+id: extract_payload
+label: Extract Payload
+category: '[Symbol Coding]'
+
+templates:
+  imports: import extract_payload
+  make: extract_payload.extract_payload(${bitpattern}, ${payloadLength}, ${headerLength})
+
+parameters:
+- id: bitpattern
+  label: Bit pattern (vector)
+  dtype: raw
+  default: (0, 0, 0)
+- id: payloadLength
+  label: Payload length
+  dtype: int
+  default: '32'
+- id: headerLength
+  label: Header length
+  dtype: int
+  default: '32'
+
+inputs:
+- label: in
+  domain: stream
+  dtype: byte
+
+outputs:
+- label: out
+  domain: stream
+  dtype: byte
+
+asserts:
+- ${ payloadLength > 0 }
+- ${ headerLength > 0 }
+
+#cpp_templates:
+#    includes: ['#include <gnuradio/blocks/min_blk.h>']
+#    declarations: 'blocks::min_${type.fcn}::sptr ${id};'
+#    make: 'this->${id} = blocks::min_${type.fcn}::make(${vlen},${vlen_out});'
+
+file_format: 1

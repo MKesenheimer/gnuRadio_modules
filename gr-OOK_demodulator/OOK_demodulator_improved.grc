@@ -275,7 +275,7 @@ blocks:
     comment: ''
     label: bitout
     num_streams: '1'
-    optional: 'False'
+    optional: 'True'
     type: byte
     vlen: '1'
   states:
