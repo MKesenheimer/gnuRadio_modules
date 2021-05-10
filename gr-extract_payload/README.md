@@ -13,7 +13,7 @@ and the bitstream pattern is given as
 01010111111111
 ```
 
-the `n` bits after this pattern are extracted. In this example, this would result with `n = 12`:
+the `n` bits after this pattern are extracted. In this example, this would result with `n = 12` in:
 ```
 011011001101
 ```
