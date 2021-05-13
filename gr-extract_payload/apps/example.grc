@@ -93,7 +93,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [928, 264.0]
+    coordinate: [880, 252.0]
     rotation: 0
     state: true
 - name: blocks_vector_source_x_0
@@ -113,7 +113,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [144, 240.0]
+    coordinate: [144, 216.0]
     rotation: 0
     state: true
 - name: extract_payload_0
@@ -123,6 +123,7 @@ blocks:
     alias: ''
     bitpattern: (0, 0, 0)
     comment: ''
+    headerLength: '32'
     maxoutbuf: '0'
     minoutbuf: '0'
     payloadLength: '32'
@@ -130,7 +131,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [552, 200.0]
+    coordinate: [536, 216.0]
     rotation: 0
     state: true
 
