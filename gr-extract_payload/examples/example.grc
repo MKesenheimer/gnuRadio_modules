@@ -1,6 +1,7 @@
 options:
   parameters:
     author: kesenheimer
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -58,16 +59,18 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [880, 176.0]
+    coordinate: [872, 172.0]
     rotation: 0
     state: disabled
-- name: blocks_throttle_0
-  id: blocks_throttle
+- name: blocks_throttle2_0
+  id: blocks_throttle2
   parameters:
     affinity: ''
     alias: ''
     comment: ''
     ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
     maxoutbuf: '0'
     minoutbuf: '0'
     samples_per_second: samp_rate
@@ -77,7 +80,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [336, 228.0]
+    coordinate: [336, 216.0]
     rotation: 0
     state: true
 - name: blocks_vector_sink_x_0
@@ -93,7 +96,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [880, 252.0]
+    coordinate: [872, 244.0]
     rotation: 0
     state: true
 - name: blocks_vector_source_x_0
@@ -113,10 +116,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [144, 216.0]
+    coordinate: [144, 212.0]
     rotation: 0
     state: true
-- name: extract_payload_0
+- name: extract_payload_1
   id: extract_payload
   parameters:
     affinity: ''
@@ -131,15 +134,16 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [536, 216.0]
+    coordinate: [504, 212.0]
     rotation: 0
     state: true
 
 connections:
-- [blocks_throttle_0, '0', extract_payload_0, '0']
-- [blocks_vector_source_x_0, '0', blocks_throttle_0, '0']
-- [extract_payload_0, '0', blocks_null_sink_0, '0']
-- [extract_payload_0, '0', blocks_vector_sink_x_0, '0']
+- [blocks_throttle2_0, '0', extract_payload_1, '0']
+- [blocks_vector_source_x_0, '0', blocks_throttle2_0, '0']
+- [extract_payload_1, '0', blocks_null_sink_0, '0']
+- [extract_payload_1, '0', blocks_vector_sink_x_0, '0']
 
 metadata:
   file_format: 1
+  grc_version: 3.10.8.0

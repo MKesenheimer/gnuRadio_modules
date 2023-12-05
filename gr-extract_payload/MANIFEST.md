@@ -3,7 +3,7 @@ brief: Short description of gr-extract_payload
 tags: # Tags are arbitrary, but look at CGRAN what other authors are using
   - sdr
 author:
-  - Matthias Kesenheimer <m.kesenheimer@gmx.net>
+  - Author Name <authors@email.address>
 copyright_owner:
   - Copyright Owner 1
 license:

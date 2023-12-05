@@ -20,3 +20,12 @@ the `n` bits after this pattern are extracted. In this example, this would resul
 
 The payload size `n` and the header length  must be given. However, the header size must not be exact and can be a rough estimate.
 
+## Notes
+
+This block was generated with the commands:
+```
+gr_modtool newmod extract_payload
+cd extract_payload
+gr_modtool add -t general -l cpp extract_payload
+> const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength
+```
