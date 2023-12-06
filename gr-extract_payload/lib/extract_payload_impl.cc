@@ -56,7 +56,7 @@ namespace gr {
 
     void
     extract_payload_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
-        int n = (int)((m_payloadLength) * noutput_items / (m_headerLength + m_payloadLength));
+        int n = (int)((m_payloadLength * noutput_items) / (m_headerLength + m_payloadLength));
         ninput_items_required[0] = n > 1? n : 1;
         //ninput_items_required[0] = 1;
         //ninput_items_required[0] = n;
@@ -75,6 +75,7 @@ namespace gr {
 #ifdef DEBUG
         GR_LOG_INFO(d_logger, boost::format("---- new work ----"));
         GR_LOG_INFO(d_logger, boost::format("ninput_items = %d, noutput_items = %d") % nsamples % noutput_items);
+        GR_LOG_INFO(d_logger, boost::format("m_navailable = %d") % m_navailable);
 #endif
 
         size_t out_count = 0;
@@ -104,6 +105,10 @@ namespace gr {
         }
 
         while (start < nsamples) {
+            /*for (size_t i = 0; i < nsamples; ++i)
+                std::cout << (int)vin[i];
+            std::cout << std::endl;*/
+
             Iter it = std::search(vin.begin() + start, vin.end(), m_bitpattern.begin(), m_bitpattern.end());
             if (static_cast<size_t>(std::distance<Iter>(it, vin.end())) >= m_bitpattern.size()) {
                 size_t itend;

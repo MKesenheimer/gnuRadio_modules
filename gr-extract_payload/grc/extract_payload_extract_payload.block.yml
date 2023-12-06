@@ -20,9 +20,9 @@ parameters:
   dtype: int
   default: '32'
 - id: prependHeader
-  label: prepend header
+  label: Prepend header
   dtype: bool
-  default: false
+  default: False
 
 inputs:
 - label: in
