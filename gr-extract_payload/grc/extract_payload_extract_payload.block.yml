@@ -4,7 +4,7 @@ category: '[Symbol Coding]'
 
 templates:
   imports: import extract_payload
-  make: extract_payload.extract_payload(${bitpattern}, ${payloadLength}, ${headerLength}, ${prependHeader})
+  make: extract_payload.extract_payload(${bitpattern}, ${payloadLength}, ${headerLength}, ${prependHeader}, ${lengthTagKey})
 
 parameters:
 - id: bitpattern
@@ -23,6 +23,10 @@ parameters:
   label: Prepend header
   dtype: bool
   default: False
+- id: lengthTagKey
+  label: Length tag key
+  dtype: string
+  default: packet_len
 
 inputs:
 - label: in
@@ -33,6 +37,10 @@ outputs:
 - label: out
   domain: stream
   dtype: byte
+- label: tagged
+  domain: stream
+  dtype: byte
+  optional: true
 
 asserts:
 - ${ payloadLength > 0 }

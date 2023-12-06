@@ -17,23 +17,24 @@ namespace gr {
   namespace extract_payload {
 
     extract_payload::sptr
-    extract_payload::make(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader) {
+    extract_payload::make(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader, const std::string& lengthTagKey) {
       return gnuradio::make_block_sptr<extract_payload_impl>(
-        bitpattern, payloadLength, headerLength, prependHeader);
+        bitpattern, payloadLength, headerLength, prependHeader, lengthTagKey);
     }
 
 
     /*
      * The private constructor
      */
-    extract_payload_impl::extract_payload_impl(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader)
+    extract_payload_impl::extract_payload_impl(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader, const std::string& lengthTagKey)
       : gr::block("extract_payload",
             gr::io_signature::make(1, 1, sizeof(uint8_t)),
-            gr::io_signature::make(1, 1, sizeof(uint8_t))),
+            gr::io_signature::make(1, 2, sizeof(uint8_t))),
         m_bitpattern(bitpattern),
         m_payloadLength(payloadLength),
         m_headerLength(headerLength),
         m_prependHeader(prependHeader),
+        m_lengthTagKey(lengthTagKey),
         m_navailable(0)
     {
         const int alignment_multiple = volk_get_alignment() / sizeof(uint8_t);
@@ -70,6 +71,7 @@ namespace gr {
     extract_payload_impl::general_work (int noutput_items, gr_vector_int &ninput_items, gr_vector_const_void_star &input_items, gr_vector_void_star &output_items) {
         const uint8_t *in = (const uint8_t *) input_items[0];
         uint8_t* out = reinterpret_cast<uint8_t*>(output_items[0]);
+        uint8_t* taggedout = reinterpret_cast<uint8_t*>(output_items[1]);
         const size_t nsamples = ninput_items[0];
 
 #ifdef DEBUG
@@ -103,6 +105,9 @@ namespace gr {
             start++;
             m_navailable--;
         }
+        if (out_count > 0 && taggedout != NULL) {
+            memcpy(taggedout, out, out_count);
+        }
 
         while (start < nsamples) {
             /*for (size_t i = 0; i < nsamples; ++i)
@@ -118,6 +123,7 @@ namespace gr {
                     it += m_bitpattern.size();
                     itend = m_payloadLength;
                 }
+
                 m_navailable = itend;
                 for (Iter i = it; i != vin.end() && i != it + itend; ++i) {
                     m_navailable--;
@@ -127,6 +133,16 @@ namespace gr {
 #ifdef DEBUG
                 GR_LOG_INFO(d_logger, boost::format("start = %d") % start);
 #endif
+
+                if (taggedout != NULL) {
+                    // copy data
+                    memcpy(taggedout, out, out_count);
+                    // make tagged stream on second (optional) output
+                    pmt::pmt_t tag_key = pmt::string_to_symbol(m_lengthTagKey);
+                    pmt::pmt_t tag_val = pmt::from_long(itend);
+                    add_item_tag(1, nitems_written(0), tag_key, tag_val);
+                }
+
             }
         
             if (it == vin.end()) break;

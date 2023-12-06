@@ -22,10 +22,11 @@ namespace gr {
       const unsigned int m_bits_or_bytes = 0;
       const unsigned int m_endianess = 0;
       const bool m_prependHeader;
+      const std::string m_lengthTagKey;
       size_t m_navailable;
 
      public:
-      extract_payload_impl(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader);
+      extract_payload_impl(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader, const std::string& lengthTagKey);
       ~extract_payload_impl();
 
       // Where all the action really happens
