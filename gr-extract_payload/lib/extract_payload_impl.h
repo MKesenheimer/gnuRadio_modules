@@ -21,14 +21,15 @@ namespace gr {
       const unsigned int m_headerLength;
       const unsigned int m_bits_or_bytes = 0;
       const unsigned int m_endianess = 0;
+      const bool m_prependHeader;
       size_t m_navailable;
 
      public:
-      extract_payload_impl(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength);
+      extract_payload_impl(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader);
       ~extract_payload_impl();
 
       // Where all the action really happens
-      void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
 
       int general_work(int noutput_items,
            gr_vector_int &ninput_items,

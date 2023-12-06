@@ -11,27 +11,29 @@
 #include <stdio.h>
 #include "extract_payload_impl.h"
 
+//#define DEBUG
+
 namespace gr {
   namespace extract_payload {
 
     extract_payload::sptr
-    extract_payload::make(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength)
-    {
+    extract_payload::make(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader) {
       return gnuradio::make_block_sptr<extract_payload_impl>(
-        bitpattern, payloadLength, headerLength);
+        bitpattern, payloadLength, headerLength, prependHeader);
     }
 
 
     /*
      * The private constructor
      */
-    extract_payload_impl::extract_payload_impl(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength)
+    extract_payload_impl::extract_payload_impl(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader)
       : gr::block("extract_payload",
             gr::io_signature::make(1, 1, sizeof(uint8_t)),
             gr::io_signature::make(1, 1, sizeof(uint8_t))),
         m_bitpattern(bitpattern),
         m_payloadLength(payloadLength),
         m_headerLength(headerLength),
+        m_prependHeader(prependHeader),
         m_navailable(0)
     {
         const int alignment_multiple = volk_get_alignment() / sizeof(uint8_t);
@@ -80,7 +82,7 @@ namespace gr {
         using Iter = std::vector<uint8_t>::const_iterator;
         std::vector<uint8_t> vin(in, in + nsamples);
 
-        // set the output vector
+        // lambda: set the output vector
         auto set_out = [&](int v) {
             if (m_bits_or_bytes == 0) {
                 out[out_count++] = v;
@@ -103,14 +105,20 @@ namespace gr {
 
         while (start < nsamples) {
             Iter it = std::search(vin.begin() + start, vin.end(), m_bitpattern.begin(), m_bitpattern.end());
-            if (std::distance<Iter>(it, vin.end()) >= m_bitpattern.size()) {
-                it += m_bitpattern.size();
-                m_navailable = m_payloadLength;
-                for (Iter i = it; i != vin.end() && i != it + m_payloadLength; ++i) {
+            if (static_cast<size_t>(std::distance<Iter>(it, vin.end())) >= m_bitpattern.size()) {
+                size_t itend;
+                if (m_prependHeader) {
+                    itend = m_payloadLength + m_bitpattern.size();
+                } else {
+                    it += m_bitpattern.size();
+                    itend = m_payloadLength;
+                }
+                m_navailable = itend;
+                for (Iter i = it; i != vin.end() && i != it + itend; ++i) {
                     m_navailable--;
                     set_out(*i);
                 }
-                start = std::distance<Iter>(vin.begin(), it) + out_count;
+                start = static_cast<size_t>(std::distance<Iter>(vin.begin(), it)) + out_count;
 #ifdef DEBUG
                 GR_LOG_INFO(d_logger, boost::format("start = %d") % start);
 #endif
@@ -137,7 +145,7 @@ namespace gr {
 
 
 #ifdef DEBUG
-        for (int i = 0; i < out_count; ++i)
+        for (size_t i = 0; i < out_count; ++i)
             GR_LOG_INFO(d_logger, boost::format("out = %x") % (int)out[i]);
 #endif
 
