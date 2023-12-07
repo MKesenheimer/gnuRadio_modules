@@ -2,3 +2,6 @@
 .DS_Store
 **/build
 .vscode
+__pycache__
+.clang-format
+.conda

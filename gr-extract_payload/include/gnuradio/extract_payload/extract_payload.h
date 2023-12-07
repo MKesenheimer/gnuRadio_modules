@@ -32,7 +32,7 @@ namespace gr {
        * class. extract_payload::extract_payload::make is the public interface for
        * creating new instances.
        */
-      static sptr make(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader, const std::string& lengthTagKey);
+      static sptr make(const std::vector<uint8_t>& bitpattern, unsigned int payloadLength, unsigned int headerLength, bool prependHeader = false, const std::string& lengthTagKey = std::string("packet_len"));
     };
 
   } // namespace extract_payload

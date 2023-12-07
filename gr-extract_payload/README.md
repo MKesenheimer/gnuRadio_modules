@@ -20,9 +20,18 @@ the `n` bits after this pattern are extracted. In this example, this would resul
 
 The payload size `n` and the header length  must be given. However, the header size must not be exact and can be a rough estimate.
 
+## Compilation and Installation
+For macOS users with gnu-radio installed via radioconda, use:
+```
+cd gr-extract_payload
+mkdir build && cd build
+cmake -DCMAKE_INSTALL_PREFIX=/path/to/radioconda ..
+make -j8 && make install
+```
+
 ## Notes
 
-This block was generated with the commands:
+This block template was generated with the commands:
 ```
 gr_modtool newmod extract_payload
 cd extract_payload

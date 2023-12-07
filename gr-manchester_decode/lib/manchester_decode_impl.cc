@@ -1,26 +1,9 @@
 /* -*- c++ -*- */
 /*
- * Copyright 2021 gr-manchester_decode author.
+ * Copyright 2023 Matthias Kesenheimer.
  *
- * This is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3, or (at your option)
- * any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this software; see the file COPYING.  If not, write to
- * the Free Software Foundation, Inc., 51 Franklin Street,
- * Boston, MA 02110-1301, USA.
+ * SPDX-License-Identifier: GPL-3.0-or-later
  */
-
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
 
 #include <gnuradio/io_signature.h>
 #include <volk/volk.h>
@@ -28,26 +11,25 @@
 
 namespace gr {
   namespace manchester_decode {
-    
+
     manchester_decode::sptr
-    manchester_decode::make(size_t samples_per_symbol, int nsync_symbols, int bit_mode, int endianess) {
-      return gnuradio::get_initial_sptr
-        (new manchester_decode_impl(samples_per_symbol, nsync_symbols, bit_mode, endianess));
+    manchester_decode::make(size_t samples_per_symbol, size_t n_sync_symbols, int bit_mode, int endianess) {
+      return gnuradio::make_block_sptr<manchester_decode_impl>(
+        samples_per_symbol, n_sync_symbols, bit_mode, endianess);
     }
+
 
     /*
      * The private constructor
      */
-    manchester_decode_impl::manchester_decode_impl(size_t samples_per_symbol,
-      int nsync_symbols, int bit_mode, int endianess)
+    manchester_decode_impl::manchester_decode_impl(size_t samples_per_symbol, size_t nsync_symbols, int bit_mode, int endianess)
       : gr::block("manchester_decode",
               gr::io_signature::make(1, 1, sizeof(float)),
               gr::io_signature::make(1, 1, sizeof(uint8_t))),
               m_samples_per_symbol(samples_per_symbol),
               m_nsync_symbols(nsync_symbols),
               m_bits_or_bytes(bit_mode),
-              m_endianess(endianess)
-    {
+              m_endianess(endianess) {
       const int alignment_multiple = volk_get_alignment() / sizeof(uint8_t);
 #ifdef DEBUG
       GR_LOG_INFO(d_logger, boost::format("alignment_multiple = %d") % alignment_multiple);
@@ -61,24 +43,20 @@ namespace gr {
     }
 
     /*
-     * The virtual destructor.
+     * Our virtual destructor.
      */
     manchester_decode_impl::~manchester_decode_impl() {}
 
-    /*
-     * Forecasting the number of outputs
-     */
-    void manchester_decode_impl::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
+    void
+    manchester_decode_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required) {
 #ifdef DEBUG
       GR_LOG_INFO(d_logger, boost::format("noutput_items = %d") % noutput_items);
 #endif
       ninput_items_required[0] = (int)(noutput_items / m_samples_per_symbol);
     }
 
-    /*
-     * General work
-     */
-    int manchester_decode_impl::general_work(int noutput_items,
+    int
+    manchester_decode_impl::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items) {
@@ -216,4 +194,3 @@ namespace gr {
 
   } /* namespace manchester_decode */
 } /* namespace gr */
-
