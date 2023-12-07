@@ -36,6 +36,7 @@ namespace gr {
       static sptr make(size_t samples_per_symbol = 4, size_t nsync_symbols = 0, int bit_mode = 0, int endianess = 0);
     };
 
+    typedef manchester_decode<std::uint8_t> manchester_decode_b;
     typedef manchester_decode<std::int16_t> manchester_decode_s;
     typedef manchester_decode<std::int32_t> manchester_decode_i;
     typedef manchester_decode<float> manchester_decode_f;

@@ -11,12 +11,16 @@ from gnuradio import blocks
 import random
 try:
     from gnuradio.manchester_decode import manchester_decode_f
+    from gnuradio.manchester_decode import manchester_decode_i
+    from gnuradio.manchester_decode import manchester_decode_s
 except ImportError:
     import os
     import sys
     dirname, filename = os.path.split(os.path.abspath(__file__))
     sys.path.append(os.path.join(dirname, "bindings"))
     from gnuradio.manchester_decode import manchester_decode_f
+    from gnuradio.manchester_decode import manchester_decode_i
+    from gnuradio.manchester_decode import manchester_decode_s
 
 class qa_manchester_decode(gr_unittest.TestCase):
 
@@ -325,6 +329,25 @@ class qa_manchester_decode(gr_unittest.TestCase):
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
+        self.tb.connect((thr, 0), (mdecode, 0))
+        self.tb.connect((src, 0), (thr, 0))
+        self.tb.connect((mdecode, 0), (snk, 0))
+        self.tb.run()
+        result_data = snk.data()
+        #print(result_data)
+        self.assertEqual(list(expected_result), result_data)
+
+    # decoding a perfect manchester stream (with short inputs)
+    def test_015_t(self):
+        self.samp_rate = samp_rate = 32000
+        src_data = (0,1,1,0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1,0,1,0,0,1)
+        expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
+        samples_per_symbol = int(len(src_data) / len(expected_result))
+        #print(samples_per_symbol)
+        mdecode = manchester_decode_s(samples_per_symbol, 0, 0, 0)
+        src = blocks.vector_source_s(src_data, False, 1, [])
+        snk = blocks.vector_sink_b(1, 0)
+        thr = blocks.throttle(gr.sizeof_short*1, samp_rate,True)
         self.tb.connect((thr, 0), (mdecode, 0))
         self.tb.connect((src, 0), (thr, 0))
         self.tb.connect((mdecode, 0), (snk, 0))

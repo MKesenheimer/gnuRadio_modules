@@ -41,6 +41,7 @@ void bind_manchester_decode_template(py::module& m, const char* classname)
 
 void bind_manchester_decode(py::module& m)
 {
+    bind_manchester_decode_template<std::uint8_t>(m, "manchester_decode_b");
     bind_manchester_decode_template<std::int16_t>(m, "manchester_decode_s");
     bind_manchester_decode_template<std::int32_t>(m, "manchester_decode_i");
     bind_manchester_decode_template<float>(m, "manchester_decode_f");

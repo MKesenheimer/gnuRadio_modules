@@ -28,7 +28,7 @@ parameters:
 inputs:
 - label: in
   domain: stream
-  dtype: [float, int, short]
+  dtype: [float, int, short, byte]
 
 outputs:
 - label: out

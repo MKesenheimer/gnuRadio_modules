@@ -66,7 +66,7 @@ namespace gr {
 
       size_t out_count = 0;
       size_t sample_count = 0;
-      uint8_t last_sample = in[0] >= 0 ? 1 : 0;
+      uint8_t last_sample = in[0] > 0 ? 1 : 0;
       uint8_t symbol[] = {0, 0}; // TODO: make static
       // the first rising edge is always a zero -> start at symbol_count = 1
       size_t symbol_count = 1; // TODO: make static
@@ -77,7 +77,7 @@ namespace gr {
       for (size_t i = 0; i <= nsamples; ++i) {
         uint8_t sample = 0;
         if (i < nsamples)
-          if (in[i] >= 0) sample = 1;
+          if (in[i] > 0) sample = 1;
 
         // start when first rising edge is detected
         if (!start && sample == 1 && last_sample == 0) start = true;
@@ -187,6 +187,7 @@ namespace gr {
       return noutput_items;
     }
 
+    template class manchester_decode<std::uint8_t>;
     template class manchester_decode<std::int16_t>;
     template class manchester_decode<std::int32_t>;
     template class manchester_decode<float>;
