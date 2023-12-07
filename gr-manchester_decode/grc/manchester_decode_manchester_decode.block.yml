@@ -3,15 +3,18 @@ label: Manchester decode
 flags: [python, cpp]
 category: '[Symbol Coding]'
 
-templates:
-  imports: import manchester_decode
-  make: manchester_decode.manchester_decode(${samples_per_symbol}, ${nsync_symbols}, ${bit_mode}, ${endianess})
-
 parameters:
 - id: samples_per_symbol
   label: samples per symbol
   dtype: int
   default: '4'
+- id: type
+  label: Input type
+  dtype: enum
+  options: [float, int, short, byte]
+  option_attributes:
+    fcn: [f, i, s, b]
+  hide: part
 - id: nsync_symbols
   label: number of syncing symbols
   dtype: int
@@ -28,7 +31,7 @@ parameters:
 inputs:
 - label: in
   domain: stream
-  dtype: [float, int, short, byte]
+  dtype: ${type}
 
 outputs:
 - label: out
@@ -45,5 +48,9 @@ asserts:
 #    includes: ['#include <gnuradio/blocks/min_blk.h>']
 #    declarations: 'blocks::min_${type.fcn}::sptr ${id};'
 #    make: 'this->${id} = blocks::min_${type.fcn}::make(${vlen},${vlen_out});'
+
+templates:
+    imports: from gnuradio.manchester_decode import *
+    make: manchester_decode_${type.fcn}(${samples_per_symbol}, ${nsync_symbols}, ${bit_mode}, ${endianess})
 
 file_format: 1

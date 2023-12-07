@@ -10,19 +10,13 @@ from gnuradio import gr, gr_unittest
 from gnuradio import blocks
 import random
 try:
-    from gnuradio.manchester_decode import manchester_decode_f
-    from gnuradio.manchester_decode import manchester_decode_i
-    from gnuradio.manchester_decode import manchester_decode_s
-    from gnuradio.manchester_decode import manchester_decode_b
+    from gnuradio.manchester_decode import *
 except ImportError:
     import os
     import sys
     dirname, filename = os.path.split(os.path.abspath(__file__))
     sys.path.append(os.path.join(dirname, "bindings"))
-    from gnuradio.manchester_decode import manchester_decode_f
-    from gnuradio.manchester_decode import manchester_decode_i
-    from gnuradio.manchester_decode import manchester_decode_s
-    from gnuradio.manchester_decode import manchester_decode_b
+    from gnuradio.manchester_decode import *
 
 class qa_manchester_decode(gr_unittest.TestCase):
 
