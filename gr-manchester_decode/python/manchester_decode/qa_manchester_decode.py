@@ -13,6 +13,7 @@ try:
     from gnuradio.manchester_decode import manchester_decode_f
     from gnuradio.manchester_decode import manchester_decode_i
     from gnuradio.manchester_decode import manchester_decode_s
+    from gnuradio.manchester_decode import manchester_decode_b
 except ImportError:
     import os
     import sys
@@ -21,6 +22,7 @@ except ImportError:
     from gnuradio.manchester_decode import manchester_decode_f
     from gnuradio.manchester_decode import manchester_decode_i
     from gnuradio.manchester_decode import manchester_decode_s
+    from gnuradio.manchester_decode import manchester_decode_b
 
 class qa_manchester_decode(gr_unittest.TestCase):
 
@@ -337,8 +339,46 @@ class qa_manchester_decode(gr_unittest.TestCase):
         #print(result_data)
         self.assertEqual(list(expected_result), result_data)
 
+    # decoding a perfect manchester stream (with float inputs)
+    def test_float_t(self):
+        self.samp_rate = samp_rate = 32000
+        src_data = (0,1,1,0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1,0,1,0,0,1)
+        expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
+        samples_per_symbol = int(len(src_data) / len(expected_result))
+        #print(samples_per_symbol)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
+        src = blocks.vector_source_f(src_data, False, 1, [])
+        snk = blocks.vector_sink_b(1, 0)
+        thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
+        self.tb.connect((thr, 0), (mdecode, 0))
+        self.tb.connect((src, 0), (thr, 0))
+        self.tb.connect((mdecode, 0), (snk, 0))
+        self.tb.run()
+        result_data = snk.data()
+        #print(result_data)
+        self.assertEqual(list(expected_result), result_data)
+
+    # decoding a perfect manchester stream (with int inputs)
+    def test_int_t(self):
+        self.samp_rate = samp_rate = 32000
+        src_data = (0,1,1,0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1,0,1,0,0,1)
+        expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
+        samples_per_symbol = int(len(src_data) / len(expected_result))
+        #print(samples_per_symbol)
+        mdecode = manchester_decode_i(samples_per_symbol, 0, 0, 0)
+        src = blocks.vector_source_i(src_data, False, 1, [])
+        snk = blocks.vector_sink_b(1, 0)
+        thr = blocks.throttle(gr.sizeof_int*1, samp_rate,True)
+        self.tb.connect((thr, 0), (mdecode, 0))
+        self.tb.connect((src, 0), (thr, 0))
+        self.tb.connect((mdecode, 0), (snk, 0))
+        self.tb.run()
+        result_data = snk.data()
+        #print(result_data)
+        self.assertEqual(list(expected_result), result_data)
+
     # decoding a perfect manchester stream (with short inputs)
-    def test_015_t(self):
+    def test_short_t(self):
         self.samp_rate = samp_rate = 32000
         src_data = (0,1,1,0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1,0,1,0,0,1)
         expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
@@ -348,6 +388,25 @@ class qa_manchester_decode(gr_unittest.TestCase):
         src = blocks.vector_source_s(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_short*1, samp_rate,True)
+        self.tb.connect((thr, 0), (mdecode, 0))
+        self.tb.connect((src, 0), (thr, 0))
+        self.tb.connect((mdecode, 0), (snk, 0))
+        self.tb.run()
+        result_data = snk.data()
+        #print(result_data)
+        self.assertEqual(list(expected_result), result_data)
+
+    # decoding a perfect manchester stream (with byte inputs)
+    def test_byte_t(self):
+        self.samp_rate = samp_rate = 32000
+        src_data = (0,1,1,0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1,0,1,0,0,1)
+        expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
+        samples_per_symbol = int(len(src_data) / len(expected_result))
+        #print(samples_per_symbol)
+        mdecode = manchester_decode_b(samples_per_symbol, 0, 0, 0)
+        src = blocks.vector_source_b(src_data, False, 1, [])
+        snk = blocks.vector_sink_b(1, 0)
+        thr = blocks.throttle(gr.sizeof_char*1, samp_rate,True)
         self.tb.connect((thr, 0), (mdecode, 0))
         self.tb.connect((src, 0), (thr, 0))
         self.tb.connect((mdecode, 0), (snk, 0))
