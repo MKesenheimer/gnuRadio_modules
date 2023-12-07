@@ -13,7 +13,8 @@
 namespace gr {
   namespace manchester_decode {
 
-    class manchester_decode_impl : public manchester_decode
+    template <class T>
+    class manchester_decode_impl : public manchester_decode<T>
     {
      private:
       size_t m_samples_per_symbol; // Todo: make static
@@ -23,10 +24,9 @@ namespace gr {
 
      public:
       manchester_decode_impl(size_t samples_per_symbol, size_t nsync_symbols, int bit_mode, int endianess);
-      ~manchester_decode_impl();
 
       // Where all the action really happens
-      void forecast (int noutput_items, gr_vector_int &ninput_items_required);
+      void forecast(int noutput_items, gr_vector_int &ninput_items_required);
 
       int general_work(int noutput_items,
            gr_vector_int &ninput_items,

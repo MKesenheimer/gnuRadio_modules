@@ -10,13 +10,13 @@ from gnuradio import gr, gr_unittest
 from gnuradio import blocks
 import random
 try:
-    from gnuradio.manchester_decode import manchester_decode
+    from gnuradio.manchester_decode import manchester_decode_f
 except ImportError:
     import os
     import sys
     dirname, filename = os.path.split(os.path.abspath(__file__))
     sys.path.append(os.path.join(dirname, "bindings"))
-    from gnuradio.manchester_decode import manchester_decode
+    from gnuradio.manchester_decode import manchester_decode_f
 
 class qa_manchester_decode(gr_unittest.TestCase):
 
@@ -32,9 +32,9 @@ class qa_manchester_decode(gr_unittest.TestCase):
         src_data = (0,1,1,0,1,0,1,0,0,1,1,0,1,0,1,0,0,1,1,0,1,0,0,1)
         src_data = [(s - 0.5) for s in src_data] # bring to [-0.5, 0.5]
         expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
-        #samples_per_symbol = int(len(src_data) / len(expected_result))
-        print(samples_per_symbol)
-        mdecode = manchester_decode(samples_per_symbol, 0, 0, 0)
+        samples_per_symbol = int(len(src_data) / len(expected_result))
+        #print(samples_per_symbol)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -55,7 +55,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
         samples_per_symbol = int(len(src_data) / len(expected_result))
         #print(samples_per_symbol)
-        mdecode = manchester_decode(samples_per_symbol, 0, 0, 0)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -76,7 +76,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
         samples_per_symbol = 8
         #print(samples_per_symbol)
-        mdecode = manchester_decode(samples_per_symbol, 0, 0, 0)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -98,7 +98,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         expected_result = (0,1,1,1,0,1,1,1,0,1,1,0)
         samples_per_symbol = 8
         #print(samples_per_symbol)
-        mdecode = manchester_decode(samples_per_symbol, 0, 0, 0)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -120,7 +120,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         expected_result = (0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         samples_per_symbol = 8
         #print(samples_per_symbol)
-        mdecode = manchester_decode(samples_per_symbol, 0, 0, 0)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -142,7 +142,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         expected_result = (0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         samples_per_symbol = 8
         #print(samples_per_symbol)
-        mdecode = manchester_decode(samples_per_symbol, 0, 0, 0)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -164,7 +164,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         expected_result = (0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         samples_per_symbol = 8
         #print(samples_per_symbol)
-        mdecode = manchester_decode(samples_per_symbol, 0, 0, 0)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -186,7 +186,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         expected_result = (0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         samples_per_symbol = 8
         #print(samples_per_symbol)
-        mdecode = manchester_decode(samples_per_symbol, 0, 0, 0)
+        mdecode = manchester_decode_f(samples_per_symbol, 0, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -207,7 +207,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         #print(src_data)
         expected_result = (0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         #print(samples_per_symbol)
-        mdecode = manchester_decode(1, 8, 0, 0)
+        mdecode = manchester_decode_f(1, 8, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -229,7 +229,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         #print(src_data)
         expected_result = (0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         #print(samples_per_symbol)
-        mdecode = manchester_decode(1, 8, 0, 0)
+        mdecode = manchester_decode_f(1, 8, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -252,7 +252,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         #print(src_data)
         expected_result = (0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         #print(samples_per_symbol)
-        mdecode = manchester_decode(1, 8, 0, 0)
+        mdecode = manchester_decode_f(1, 8, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -275,7 +275,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         #print(src_data)
         expected_result = (0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         #print(samples_per_symbol)
-        mdecode = manchester_decode(1, 8, 0, 0)
+        mdecode = manchester_decode_f(1, 8, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -298,7 +298,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         #print(src_data)
         expected_result = (0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         #print(samples_per_symbol)
-        mdecode = manchester_decode(1, 8, 0, 0)
+        mdecode = manchester_decode_f(1, 8, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)
@@ -321,7 +321,7 @@ class qa_manchester_decode(gr_unittest.TestCase):
         #print(src_data)
         expected_result = (0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,1,1,0)
         #print(samples_per_symbol)
-        mdecode = manchester_decode(1, 8, 0, 0)
+        mdecode = manchester_decode_f(1, 8, 0, 0)
         src = blocks.vector_source_f(src_data, False, 1, [])
         snk = blocks.vector_sink_b(1, 0)
         thr = blocks.throttle(gr.sizeof_float*1, samp_rate,True)

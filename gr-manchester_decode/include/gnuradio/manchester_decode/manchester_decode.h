@@ -19,10 +19,11 @@ namespace gr {
      * \ingroup manchester_decode
      *
      */
+    template <class T>
     class MANCHESTER_DECODE_API manchester_decode : virtual public gr::block
     {
      public:
-      typedef std::shared_ptr<manchester_decode> sptr;
+      typedef std::shared_ptr<manchester_decode<T>> sptr;
 
       /*!
        * \brief Return a shared_ptr to a new instance of manchester_decode::manchester_decode.
@@ -34,6 +35,10 @@ namespace gr {
        */
       static sptr make(size_t samples_per_symbol = 4, size_t nsync_symbols = 0, int bit_mode = 0, int endianess = 0);
     };
+
+    typedef manchester_decode<std::int16_t> manchester_decode_s;
+    typedef manchester_decode<std::int32_t> manchester_decode_i;
+    typedef manchester_decode<float> manchester_decode_f;
 
   } // namespace manchester_decode
 } // namespace gr

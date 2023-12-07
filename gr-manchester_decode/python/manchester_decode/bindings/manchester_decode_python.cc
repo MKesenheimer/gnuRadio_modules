@@ -27,31 +27,24 @@ namespace py = pybind11;
 // pydoc.h is automatically generated in the build directory
 #include <manchester_decode_pydoc.h>
 
-void bind_manchester_decode(py::module& m)
+template <typename T>
+void bind_manchester_decode_template(py::module& m, const char* classname)
 {
+    using manchester_decode = gr::manchester_decode::manchester_decode<T>;
 
-    using manchester_decode    = gr::manchester_decode::manchester_decode;
-
-
-    py::class_<manchester_decode, gr::block, gr::basic_block,
-        std::shared_ptr<manchester_decode>>(m, "manchester_decode", D(manchester_decode))
-
-        .def(py::init(&manchester_decode::make),
-           D(manchester_decode,make)
-        )
-        
-
-
-
-        ;
-
-
-
-
+    py::class_<manchester_decode, 
+                gr::block, 
+                gr::basic_block,
+                std::shared_ptr<manchester_decode>>(m, classname, D(manchester_decode))
+        .def(py::init(&manchester_decode::make), D(manchester_decode, make));
 }
 
-
-
+void bind_manchester_decode(py::module& m)
+{
+    bind_manchester_decode_template<std::int16_t>(m, "manchester_decode_s");
+    bind_manchester_decode_template<std::int32_t>(m, "manchester_decode_i");
+    bind_manchester_decode_template<float>(m, "manchester_decode_f");
+}
 
 
 

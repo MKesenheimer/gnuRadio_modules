@@ -12,19 +12,19 @@
 namespace gr {
   namespace manchester_decode {
 
-    manchester_decode::sptr
-    manchester_decode::make(size_t samples_per_symbol, size_t n_sync_symbols, int bit_mode, int endianess) {
-      return gnuradio::make_block_sptr<manchester_decode_impl>(
+    template <class T>
+    typename manchester_decode<T>::sptr manchester_decode<T>::make(size_t samples_per_symbol, size_t n_sync_symbols, int bit_mode, int endianess) {
+      return gnuradio::make_block_sptr<manchester_decode_impl<T>>(
         samples_per_symbol, n_sync_symbols, bit_mode, endianess);
     }
-
 
     /*
      * The private constructor
      */
-    manchester_decode_impl::manchester_decode_impl(size_t samples_per_symbol, size_t nsync_symbols, int bit_mode, int endianess)
+    template <class T>
+    manchester_decode_impl<T>::manchester_decode_impl(size_t samples_per_symbol, size_t nsync_symbols, int bit_mode, int endianess)
       : gr::block("manchester_decode",
-              gr::io_signature::make(1, 1, sizeof(float)),
+              gr::io_signature::make(1, 1, sizeof(T)),
               gr::io_signature::make(1, 1, sizeof(uint8_t))),
               m_samples_per_symbol(samples_per_symbol),
               m_nsync_symbols(nsync_symbols),
@@ -42,25 +42,20 @@ namespace gr {
       this->set_relative_rate(1, (uint64_t)samples_per_symbol); // interpolation, decimation
     }
 
-    /*
-     * Our virtual destructor.
-     */
-    manchester_decode_impl::~manchester_decode_impl() {}
-
-    void
-    manchester_decode_impl::forecast (int noutput_items, gr_vector_int &ninput_items_required) {
+    template <class T>
+    void manchester_decode_impl<T>::forecast(int noutput_items, gr_vector_int &ninput_items_required) {
 #ifdef DEBUG
       GR_LOG_INFO(d_logger, boost::format("noutput_items = %d") % noutput_items);
 #endif
       ninput_items_required[0] = (int)(noutput_items / m_samples_per_symbol);
     }
 
-    int
-    manchester_decode_impl::general_work (int noutput_items,
+    template <class T>
+    int manchester_decode_impl<T>::general_work (int noutput_items,
                        gr_vector_int &ninput_items,
                        gr_vector_const_void_star &input_items,
                        gr_vector_void_star &output_items) {
-      const float* in = reinterpret_cast<const float*>(input_items[0]);
+      const T* in = reinterpret_cast<const T*>(input_items[0]);
       uint8_t* out = reinterpret_cast<uint8_t*>(output_items[0]);
       const size_t nsamples = ninput_items[0];
 
@@ -192,5 +187,8 @@ namespace gr {
       return noutput_items;
     }
 
+    template class manchester_decode<std::int16_t>;
+    template class manchester_decode<std::int32_t>;
+    template class manchester_decode<float>;
   } /* namespace manchester_decode */
 } /* namespace gr */
