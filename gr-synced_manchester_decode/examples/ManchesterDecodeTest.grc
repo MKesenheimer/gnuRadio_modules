@@ -102,8 +102,8 @@ blocks:
     coordinate: [136, 196.0]
     rotation: 0
     state: true
-- name: manchester_decode_0
-  id: manchester_decode
+- name: synced_manchester_decode_0
+  id: synced_manchester_decode
   parameters:
     affinity: ''
     alias: ''
@@ -123,9 +123,9 @@ blocks:
     state: true
 
 connections:
-- [blocks_throttle2_0, '0', manchester_decode_0, '0']
+- [blocks_throttle2_0, '0', synced_manchester_decode_0, '0']
 - [blocks_vector_source_x_0, '0', blocks_throttle2_0, '0']
-- [manchester_decode_0, '0', blocks_vector_sink_x_0, '0']
+- [synced_manchester_decode_0, '0', blocks_vector_sink_x_0, '0']
 
 metadata:
   file_format: 1

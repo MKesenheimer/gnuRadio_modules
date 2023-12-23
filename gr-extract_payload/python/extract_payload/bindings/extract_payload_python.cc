@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(extract_payload.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(fd8c1cfe588e5b31ddf17ad789411ccb)                     */
+/* BINDTOOL_HEADER_FILE_HASH(263419617f2f868b1a109c9bf130d769)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -37,6 +37,11 @@ void bind_extract_payload(py::module& m)
         std::shared_ptr<extract_payload>>(m, "extract_payload", D(extract_payload))
 
         .def(py::init(&extract_payload::make),
+           py::arg("bitpattern"),
+           py::arg("payloadLength"),
+           py::arg("headerLength"),
+           py::arg("prependHeader") =  false,
+           py::arg("lengthTagKey") =  std::string("packet_len"),
            D(extract_payload,make)
         )
         

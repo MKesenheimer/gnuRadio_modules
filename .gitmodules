@@ -1,0 +1,9 @@
+[submodule "gr-lora_sdr"]
+	path = gr-lora_sdr
+	url = https://github.com/tapparelj/gr-lora_sdr.git
+[submodule "gr-adsb"]
+	path = gr-adsb
+	url = https://github.com/mhostetter/gr-adsb.git
+[submodule "gr-rstt"]
+	path = gr-rstt
+	url = https://github.com/bastibl/gr-rstt.git

@@ -1,0 +1,6 @@
+/*!
+ * \defgroup block GNU Radio SYNCED_MANCHESTER_DECODE C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the SYNCED_MANCHESTER_DECODE GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */

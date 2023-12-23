@@ -19,9 +19,6 @@
  static const char *__doc_gr_manchester_decode_manchester_decode = R"doc()doc";
 
 
- static const char *__doc_gr_manchester_decode_manchester_decode_manchester_decode = R"doc()doc";
-
-
  static const char *__doc_gr_manchester_decode_manchester_decode_make = R"doc()doc";
 
   

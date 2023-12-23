@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(manchester_decode.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(1b3d634e1f9558eaea9da5e3e1a93430)                     */
+/* BINDTOOL_HEADER_FILE_HASH(1ed7f4397e020bbc9a22761a9712d4c6)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -46,8 +46,3 @@ void bind_manchester_decode(py::module& m)
     bind_manchester_decode_template<std::int32_t>(m, "manchester_decode_i");
     bind_manchester_decode_template<float>(m, "manchester_decode_f");
 }
-
-
-
-
-

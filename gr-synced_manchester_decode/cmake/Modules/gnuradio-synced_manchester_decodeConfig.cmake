@@ -1,0 +1,32 @@
+find_package(PkgConfig)
+
+PKG_CHECK_MODULES(PC_GR_SYNCED_MANCHESTER_DECODE gnuradio-synced_manchester_decode)
+
+FIND_PATH(
+    GR_SYNCED_MANCHESTER_DECODE_INCLUDE_DIRS
+    NAMES gnuradio/synced_manchester_decode/api.h
+    HINTS $ENV{SYNCED_MANCHESTER_DECODE_DIR}/include
+        ${PC_SYNCED_MANCHESTER_DECODE_INCLUDEDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/include
+          /usr/local/include
+          /usr/include
+)
+
+FIND_LIBRARY(
+    GR_SYNCED_MANCHESTER_DECODE_LIBRARIES
+    NAMES gnuradio-synced_manchester_decode
+    HINTS $ENV{SYNCED_MANCHESTER_DECODE_DIR}/lib
+        ${PC_SYNCED_MANCHESTER_DECODE_LIBDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/lib
+          ${CMAKE_INSTALL_PREFIX}/lib64
+          /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+          )
+
+include("${CMAKE_CURRENT_LIST_DIR}/gnuradio-synced_manchester_decodeTarget.cmake")
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(GR_SYNCED_MANCHESTER_DECODE DEFAULT_MSG GR_SYNCED_MANCHESTER_DECODE_LIBRARIES GR_SYNCED_MANCHESTER_DECODE_INCLUDE_DIRS)
+MARK_AS_ADVANCED(GR_SYNCED_MANCHESTER_DECODE_LIBRARIES GR_SYNCED_MANCHESTER_DECODE_INCLUDE_DIRS)

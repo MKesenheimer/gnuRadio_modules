@@ -21,7 +21,7 @@ from PyQt5 import Qt
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
-import manchester_decode
+import synced_manchester_decode
 
 
 
@@ -66,7 +66,7 @@ class untitled(gr.top_block, Qt.QWidget):
         # Blocks
         ##################################################
 
-        self.manchester_decode_0 = manchester_decode.manchester_decode(4, 0, 0, 0)
+        self.synced_manchester_decode_0 = synced_manchester_decode.synced_manchester_decode(4, 0, 0, 0)
         self.blocks_vector_source_x_0 = blocks.vector_source_f((0, 0, 0), False, 1, [])
         self.blocks_vector_sink_x_0 = blocks.vector_sink_b(1, 0)
         self.blocks_throttle2_0 = blocks.throttle( gr.sizeof_float*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
@@ -75,9 +75,9 @@ class untitled(gr.top_block, Qt.QWidget):
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.blocks_throttle2_0, 0), (self.manchester_decode_0, 0))
+        self.connect((self.blocks_throttle2_0, 0), (self.synced_manchester_decode_0, 0))
         self.connect((self.blocks_vector_source_x_0, 0), (self.blocks_throttle2_0, 0))
-        self.connect((self.manchester_decode_0, 0), (self.blocks_vector_sink_x_0, 0))
+        self.connect((self.synced_manchester_decode_0, 0), (self.blocks_vector_sink_x_0, 0))
 
 
     def closeEvent(self, event):

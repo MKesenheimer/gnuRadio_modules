@@ -7,7 +7,7 @@
  *
  */
 #include "pydoc_macros.h"
-#define D(...) DOC(gr, extract_payload, __VA_ARGS__)
+#define D(...) DOC(gr, synced_manchester_decode, __VA_ARGS__)
 /*
   This file contains placeholders for docstrings for the Python bindings.
   Do not edit! These were automatically extracted during the binding process
@@ -16,9 +16,9 @@
 
 
 
- static const char *__doc_gr_extract_payload_extract_payload = R"doc()doc";
+ static const char *__doc_gr_synced_manchester_decode_synced_manchester_decode = R"doc()doc";
 
 
- static const char *__doc_gr_extract_payload_extract_payload_make = R"doc()doc";
+ static const char *__doc_gr_synced_manchester_decode_synced_manchester_decode_make = R"doc()doc";
 
   
